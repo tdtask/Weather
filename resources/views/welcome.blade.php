@@ -33,9 +33,7 @@
                     <button id="make_file" onclick="App.makeFile()">
                         Make
                     </button>
-                    <div id="is_done" class="hidden">
-                    </div>
-                    <div id="is_error" class="hidden">
+                    <div id="response">
                     </div>
                 </div>
             </div>
