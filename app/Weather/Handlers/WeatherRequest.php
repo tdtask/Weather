@@ -43,7 +43,7 @@ class WeatherRequest
             ]);
             $data = $response->getBody()->getContents();
         }catch (\Exception $e){
-            return ['error' => 'Cannot call weather api'];
+            return ['error' => "Cannot call weather api. Desc: \"{$e->getMessage()}\""];
         }
         if($data = json_decode($data, true)){
             $data = $data['fact'];

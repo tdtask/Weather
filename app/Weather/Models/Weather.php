@@ -38,6 +38,44 @@ class Weather
      * */
     private $obs_time;
     
+    /**
+     * @var array $conditions Возможные варианты погодных условий.
+     * */
+    private $conditions = [
+        'clear'                            => 'ясно',
+        'partly-cloudy'                    => 'малооблачно',
+        'cloudy'                           => 'облачно с прояснениями',
+        'overcast'                         => 'пасмурно',
+        'partly-cloudy-and-light-rain'     => 'небольшой дождь',
+        'partly-cloudy-and-rain'           => 'дождь',
+        'overcast-and-rain'                => 'сильный дождь',
+        'overcast-thunderstorms-with-rain' => 'сильный дождь, гроза',
+        'cloudy-and-light-rain'            => 'небольшой дождь',
+        'overcast-and-light-rain'          => 'небольшой дождь',
+        'cloudy-and-rain'                  => 'дождь',
+        'overcast-and-wet-snow'            => 'дождь со снегом',
+        'partly-cloudy-and-light-snow'     => 'небольшой снег',
+        'partly-cloudy-and-snow'           => 'снег',
+        'overcast-and-snow'                => 'снегопад',
+        'cloudy-and-light-snow'            => 'небольшой снег',
+        'overcast-and-light-snow'          => 'небольшой снег',
+        'cloudy-and-snow'                  => 'снег'
+    ];
+    /**
+     * @var array $directions Возможные варианты направления ветра.
+     * */
+    private $directions = [
+        'nw' => 'северо-западное',
+        'n'  => 'северное',
+        'ne' => 'северо-восточное',
+        'e'  => 'восточное',
+        'se' => 'юго-восточное',
+        's'  => 'южное',
+        'sw' => 'юго-западное',
+        'w'  => 'западное',
+        'с'  => 'штиль',
+    ];
+    
     public function __construct(array $data)
     {
         $this->temp = $data['temp'] ?: 0;
@@ -92,53 +130,22 @@ class Weather
 
     private function getConditionDescription(string $condition): string
     {
-        $conditions = [
-            'clear'                            => 'ясно',
-            'partly-cloudy'                    => 'малооблачно',
-            'cloudy'                           => 'облачно с прояснениями',
-            'overcast'                         => 'пасмурно',
-            'partly-cloudy-and-light-rain'     => 'небольшой дождь',
-            'partly-cloudy-and-rain'           => 'дождь',
-            'overcast-and-rain'                => 'сильный дождь',
-            'overcast-thunderstorms-with-rain' => 'сильный дождь, гроза',
-            'cloudy-and-light-rain'            => 'небольшой дождь',
-            'overcast-and-light-rain'          => 'небольшой дождь',
-            'cloudy-and-rain'                  => 'дождь',
-            'overcast-and-wet-snow'            => 'дождь со снегом',
-            'partly-cloudy-and-light-snow'     => 'небольшой снег',
-            'partly-cloudy-and-snow'           => 'снег',
-            'overcast-and-snow'                => 'снегопад',
-            'cloudy-and-light-snow'            => 'небольшой снег',
-            'overcast-and-light-snow'          => 'небольшой снег',
-            'cloudy-and-snow'                  => 'снег'
-        ];
-        if(array_key_exists($condition, $conditions)){
-            return $conditions[$condition];
+        if(array_key_exists($condition, $this->conditions)){
+            return $this->conditions[$condition];
         }
         return "";
     }
 
     private function getWindDirDescription(string $dir): string
     {
-        $directions = [
-            'nw' => 'северо-западное',
-            'n'  => 'северное',
-            'ne' => 'северо-восточное',
-            'e'  => 'восточное',
-            'se' => 'юго-восточное',
-            's'  => 'южное',
-            'sw' => 'юго-западное',
-            'w'  => 'западное',
-            'с'  => 'штиль',
-        ];
-        if(array_key_exists($dir, $directions)){
-            return $directions[$dir];
+        if(array_key_exists($dir, $this->directions)){
+            return $this->directions[$dir];
         }
         return "";
     }
     
     private function convertDate(string $date)
     {
-        return date('l jS \of F Y h:i:s A', $date);
+        return date('d.m.Y H:i', $date);
     }
 }

@@ -13,9 +13,18 @@ use Validator;
 class WeatherController extends Controller
 {
     /**
-     * details api
+     * @api {post} /api/weather/export_file
+     * @apiName export_file
+     * @apiGroup Weather
+     * @apiPermission 
+     * @apiDescription Выгрузить файл с погодой за сегодня
      *
-     * @return \Illuminate\Http\Response
+     * @apiParam {string} [file_type] Тип выгружаемого файла. Возможные значение json,xml. Обязательный.
+     *
+     * @apiSuccess (0) {Integer} file Путь куда сохранился файл.
+     * @apiSuccess (-1) {Integer} status Тип файла не найден.
+     * @apiSuccess (-2) {Integer} status Ошибка при получении данных погоды.
+     * @apiSuccess (-3) {Integer} status ОШибка при сохранении файла на диск.
      */
     public function exportFile(Request $request)
     {
@@ -40,8 +49,7 @@ class WeatherController extends Controller
         if(isset($response['error'])) {
             return response()->json(['code' => -3, 'error' => $response['error']]);
         }
-        $storage_path = Storage::disk('local')->getDriver()->getAdapter()->getPathPrefix();
-        $full_path = $storage_path.$response['file_name'];
+        $full_path = Storage::disk('local')->path($response['file_name']);
         return response()->json(['code' => 0, 'file' => $full_path]);
     }
 }

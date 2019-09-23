@@ -21,7 +21,7 @@ class XmlFile implements File
         try{
             Storage::disk('local')->put($file_name, $data);
         }catch (\Exception $e){
-            return ['error' => 'Cannot save file'];
+            return ['error' => "Cannot save file. Desc: \"{$e->getMessage()}\""];
         }
         return ['file_name' => $file_name];
     }
@@ -38,7 +38,6 @@ class XmlFile implements File
     <water_temperature>{$weather->getTemperatureWater()}</water_temperature>
     <weather_condition>{$weather->getCondition()}</weather_condition>
     <pressure_mm>{$weather->getPressure()}</pressure_mm>
-</root>
-        ";
+</root>";
     }
 }

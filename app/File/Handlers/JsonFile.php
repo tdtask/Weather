@@ -21,7 +21,7 @@ class JsonFile implements File
         try{
             Storage::disk('local')->put($file_name, $data);
         }catch (\Exception $e){
-            return ['error' => 'Cannot save file'];
+            return ['error' => "Cannot save file. Desc: \"{$e->getMessage()}\""];
         }
         return ['file_name' => $file_name];
     }
