@@ -29,11 +29,20 @@ class JsonFile implements File
     public function prepareData(Weather $weather): string 
     {
         return json_encode([
-            'weather_date' => $weather->getDate(),
+            'weather_date' => [
+                'timestamp' => $weather->getDate(),
+                'date'      => $weather->getConvertDate(),
+            ],
             'temperature' => $weather->getTemperature(),
-            'wind_direction' => $weather->getWindDir(),
+            'wind_direction' => [
+                'value' => $weather->getWindDir(),
+                'desc'  => $weather->getWindDirDescription()
+            ],
             'water_temperature' => $weather->getTemperatureWater(),
-            'weather_condition' => $weather->getCondition(),
+            'weather_condition' => [
+                'value' => $weather->getCondition(),
+                'desc'  => $weather->getConditionDescription()
+            ],
             'wind_speed' => $weather->getWindSpeed(),
             'pressure_mm' => $weather->getPressure(),
             'humidity' => $weather->getHumidity(),

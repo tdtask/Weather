@@ -30,13 +30,22 @@ class XmlFile implements File
     {
         return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <root>
-    <weather_date>{$weather->getDate()}</weather_date>
+    <weather_date>
+        <timestamp>{$weather->getDate()}</timestamp>
+        <date>{$weather->getConvertDate()}</date>
+    </weather_date>
     <wind_speed>{$weather->getWindSpeed()}</wind_speed>
     <temperature>{$weather->getTemperature()}</temperature>
     <humidity>{$weather->getHumidity()}</humidity>
-    <wind_direction>{$weather->getWindDir()}</wind_direction>
+    <wind_direction>
+        <value>{$weather->getWindDir()}</value>
+        <desc>{$weather->getWindDirDescription()}</desc>
+    </wind_direction>
     <water_temperature>{$weather->getTemperatureWater()}</water_temperature>
-    <weather_condition>{$weather->getCondition()}</weather_condition>
+    <weather_condition>
+        <value>{$weather->getCondition()}</value>
+        <desc>{$weather->getConditionDescription()}</desc>
+    </weather_condition>
     <pressure_mm>{$weather->getPressure()}</pressure_mm>
 </root>";
     }

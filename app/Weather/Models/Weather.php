@@ -78,14 +78,14 @@ class Weather
     
     public function __construct(array $data)
     {
-        $this->temp = $data['temp'] ?: 0;
-        $this->temp_water = $data['temp_water'] ?: 0;
-        $this->condition = $this->getConditionDescription((string)$data['condition']);
-        $this->wind_speed = $data['wind_speed'] ?: 0;
-        $this->wind_dir = $this->getWindDirDescription((string)$data['wind_dir']);
-        $this->pressure_mm = $data['pressure_mm'] ?: 0;
-        $this->humidity = $data['humidity'] ?: 0;
-        $this->obs_time = $this->convertDate((string)$data['obs_time']);
+        $this->temp = (int)$data['temp'];
+        $this->temp_water = (int)$data['temp_water'];
+        $this->condition = (string)$data['condition'];
+        $this->wind_speed = (int)$data['wind_speed'];
+        $this->wind_dir = (string)$data['wind_dir'];
+        $this->pressure_mm = (int)$data['pressure_mm'];
+        $this->humidity = (int)$data['humidity'];
+        $this->obs_time = (string)$data['obs_time'];
     }
     
     public function getDate()
@@ -128,24 +128,24 @@ class Weather
         return $this->humidity;
     }
 
-    private function getConditionDescription(string $condition): string
+    public function getConditionDescription(): string
     {
-        if(array_key_exists($condition, $this->conditions)){
-            return $this->conditions[$condition];
+        if(array_key_exists($this->condition, $this->conditions)){
+            return $this->conditions[$this->condition];
         }
         return "";
     }
 
-    private function getWindDirDescription(string $dir): string
+    public function getWindDirDescription(): string
     {
-        if(array_key_exists($dir, $this->directions)){
-            return $this->directions[$dir];
+        if(array_key_exists($this->wind_dir, $this->directions)){
+            return $this->directions[$this->wind_dir];
         }
         return "";
     }
     
-    private function convertDate(string $date)
+    public function getConvertDate()
     {
-        return date('d.m.Y H:i', $date);
+        return date('d.m.Y H:i', $this->obs_time);
     }
 }
