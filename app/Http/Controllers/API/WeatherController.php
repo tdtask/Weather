@@ -50,6 +50,6 @@ class WeatherController extends Controller
             return response()->json(['code' => -3, 'error' => $response['error']]);
         }
         $full_path = Storage::disk('local')->path($response['file_name']);
-        return response()->json(['code' => 0, 'file' => $full_path]);
+        return response()->json(['code' => 0, 'file' => $full_path, 'file_name' => $response['file_name']]);
     }
 }
